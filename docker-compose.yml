@@ -1,0 +1,31 @@
+version: '3.7'
+services:
+  mgdb:
+    image: mongo:latest
+    restart: always
+    volumes:
+      - /home/muhammad/Dev/Company/nurtw-api/storage/mongo:/data/db/
+    networks:
+      - myNet
+      
+  users:
+    build: ./users
+    restart: always
+    networks:
+      - myNet
+    ports:
+      - 3000:3000
+
+
+
+
+  # proxy:
+  # drivers:
+  # parcels:
+  # parks:
+  # passengers:
+  # vehicles:
+
+
+networks:
+  myNet:
