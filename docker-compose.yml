@@ -15,16 +15,42 @@ services:
       - myNet
     ports:
       - 3000:3000
-
-
-
-
+  drivers:
+    build: ./drivers
+    restart: always
+    networks:
+      - myNet
+    ports:
+      - 3001:3000
+  parcels:
+    build: ./parcels
+    restart: always
+    networks:
+      - myNet
+    ports:
+      - 3002:3000
+  parks:
+    build: ./parks
+    restart: always
+    networks:
+      - myNet
+    ports:
+      - 3003:3000
+  passengers:
+    build: ./passengers
+    restart: always
+    networks:
+      - myNet
+    ports:
+      - 3004:3000
+  vehicles:
+    build: ./vehicles
+    restart: always
+    networks:
+      - myNet
+    ports:
+      - 3005:3000
   # proxy:
-  # drivers:
-  # parcels:
-  # parks:
-  # passengers:
-  # vehicles:
 
 
 networks:
