@@ -8,49 +8,101 @@ services:
     networks:
       - myNet
       
-  users:
-    build: ./users
+  auth:
+    build: ./auth
     restart: always
+    # ports:
+    #   - 3000:3000
+    labels:
+      - traefik.frontend.rule=Host:auth.localhost 
+      - traefik.enable=true
+      - traefik.port=3000
+      - traefik.docker.network=nurtw-api_myNet
     networks:
       - myNet
-    ports:
-      - 3000:3000
+
+
   drivers:
     build: ./drivers
     restart: always
+    # ports:
+    #   - 3001:3000
+    labels:
+      - traefik.enable=true
+      - traefik.port=3000
+      - traefik.docker.network=nurtw-api_myNet
     networks:
       - myNet
-    ports:
-      - 3001:3000
+
+
   parcels:
     build: ./parcels
     restart: always
+    # ports:
+    #   - 3002:3000
+    labels:
+      - traefik.enable=true
+      - traefik.port=3000
+      - traefik.docker.network=nurtw-api_myNet
     networks:
       - myNet
-    ports:
-      - 3002:3000
+
+
   parks:
     build: ./parks
     restart: always
+    # ports:
+    #   - 3003:3000
+    labels:
+      - traefik.enable=true
+      - traefik.port=3000
+      - traefik.docker.network=nurtw-api_myNet
     networks:
       - myNet
-    ports:
-      - 3003:3000
+
+
   passengers:
     build: ./passengers
     restart: always
+    # ports:
+    #   - 3004:3000
+    labels:
+      - traefik.enable=true
+      - traefik.port=3000
+      - traefik.docker.network=nurtw-api_myNet
     networks:
       - myNet
-    ports:
-      - 3004:3000
+
+
   vehicles:
     build: ./vehicles
     restart: always
+    # ports:
+    #   - 3005:3000
+    labels:
+      - traefik.enable=true
+      - traefik.port=3000
+      - traefik.docker.network=nurtw-api_myNet
     networks:
       - myNet
+
+
+  proxy:
+    image: traefik:1.7.6-alpine
+    restart: always
+    command: --docker
+    labels:
+      - traefik.frontend.rule=Host:localhost
+      - traefik.enable=true
+      - traefik.port=8080
+      - traefik.docker.network=nurtw-api_myNet
+    volumes:
+      - /home/muhammad/Dev/Company/nurtw-api/traefik.toml
+      - /var/run/docker.sock:/var/run/docker.sock
     ports:
-      - 3005:3000
-  # proxy:
+      - 80:80
+    networks:
+      - myNet
 
 
 networks:
